@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
       flex: 1,
       justifyContent: 'flex-start',
       alignItems: 'center',
-      backgroundColor: '#F5FCFF',
+      backgroundColor: 'rgba(245, 252, 255, 0.3)',
     },
   });
   
@@ -495,7 +495,8 @@ export default class App extends Component<Props> {
             style={{
                 width: '100%',
                 height: '68%',
-                borderRadius: WP('8%'),
+                borderTopLeftRadius: WP('10%'),
+                borderTopRightRadius: WP('10%'),
                 backgroundColor: this.state.isListMode ? 'rgb(220, 220, 220)' : 'rgb(240, 240, 240)',
                 justifyContent: 'flex-start',
                 alignItems: 'center',

@@ -14,6 +14,7 @@ import {
 import COTab from '../screens/COTab';
 import FinedustTab from '../screens/FinedustTab';
 import OzoneTab from '../screens/OzoneTab';
+import Measure from '../screens/Measure';
 
 import {
     widthPercentageToDP as WP,
@@ -100,7 +101,7 @@ const TabBar = (props) => {
                     top: 0,
                     left: WP('10%'),
                     width: WP('100%'),
-                    height: HP('20%'),
+                    height: HP('30%'),
                     zIndex: 0,
                 }}
                 resizeMode="stretch"
@@ -183,6 +184,7 @@ const TabNavigator = createMaterialTopTabNavigator(
 const DrawerNavigator = createDrawerNavigator(
     {
         TabNavigator,
+        Measure,
     },
     {
         contentComponent: CustomDrawer,

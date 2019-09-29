@@ -111,7 +111,7 @@ export default class App extends Component<Props> {
                     source={ICON_DRAWER_MEASURE}
                     title="수치 측정"
                     onPress={()=>{
-
+                        this.props.navigation.navigate('Measure');
                     }}
                 />
 
@@ -119,7 +119,7 @@ export default class App extends Component<Props> {
                     source={ICON_DRAWER_RECORD}
                     title="수치 기록"
                     onPress={()=>{
-
+                        this.props.navigation.navigate('TabNavigator');
                     }}
                 />
 
@@ -127,7 +127,7 @@ export default class App extends Component<Props> {
                     source={ICON_DRAWER_HOWTO}
                     title="Mask Styler 사용법"
                     onPress={()=>{
-
+                        this.props.navigation.navigate('Howto');
                     }}
                 />
 
@@ -135,7 +135,7 @@ export default class App extends Component<Props> {
                     source={ICON_DRAWER_REVIEW}
                     title="리뷰"
                     onPress={()=>{
-
+                        this.props.navigation.navigate('Review');
                     }}
                 />
             </View>
