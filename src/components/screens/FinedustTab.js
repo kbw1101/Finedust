@@ -35,47 +35,69 @@ const styles = StyleSheet.create({
   
 type Props = {};
 
-const listDataFineMonth = [
-    {id: 0, date: '2019-09-01T08:44:00Z', finedust: 60},
-    {id: 1, date: '2019-09-02T09:52:00Z', finedust: 57},
-    {id: 2, date: '2019-09-03T08:42:00Z', finedust: 42},
-    {id: 3, date: '2019-09-04T08:49:00Z', finedust: 58},
-    {id: 4, date: '2019-09-05T08:56:00Z', finedust: 62},
-    {id: 5, date: '2019-09-06T08:50:00Z', finedust: 77},
-    {id: 6, date: '2019-09-07T08:48:00Z', finedust: 56},
-    {id: 7, date: '2019-09-08T08:29:00Z', finedust: 44},
-    {id: 8, date: '2019-09-09T08:39:00Z', finedust: 31},
-    {id: 9, date: '2019-09-10T08:30:00Z', finedust: 45},
-    {id: 10, date: '2019-09-11T08:40:00Z', finedust: 40},
-    {id: 11, date: '2019-09-12T08:44:00Z', finedust: 57},
-    {id: 12, date: '2019-09-13T08:41:00Z', finedust: 42},
-    {id: 13, date: '2019-09-14T08:57:00Z', finedust: 39},
-    {id: 14, date: '2019-09-15T08:43:00Z', finedust: 62},
-    {id: 15, date: '2019-09-16T08:43:00Z', finedust: 19},
-    {id: 16, date: '2019-09-17T08:37:00Z', finedust: 56},
-    {id: 17, date: '2019-09-18T08:49:00Z', finedust: 44},
-    {id: 18, date: '2019-09-19T08:46:00Z', finedust: 38},
-    {id: 19, date: '2019-09-20T08:21:00Z', finedust: 45},
-    {id: 20, date: '2019-09-21T08:44:00Z', finedust: 40},
-    {id: 21, date: '2019-09-22T08:46:00Z', finedust: 57},
-    {id: 22, date: '2019-09-23T08:18:00Z', finedust: 42},
-    {id: 23, date: '2019-09-24T08:43:00Z', finedust: 39},
-    {id: 24, date: '2019-09-25T08:41:00Z', finedust: 62},
-    {id: 25, date: '2019-09-26T08:55:00Z', finedust: 19},
-    {id: 26, date: '2019-09-27T08:47:00Z', finedust: 56},
-    {id: 27, date: '2019-09-28T08:29:00Z', finedust: 44},
-    {id: 28, date: '2019-09-29T08:40:00Z', finedust: 38},
-    {id: 29, date: '2019-09-30T08:31:00Z', finedust: 45},
+const listData = [
+    {id: 0, date: '2019-09-01T08:44:00Z', finedust: 60, ozone: 0.002, co: 0.5}, // UG/M3, PPM, UG/M3
+    {id: 1, date: '2019-09-02T09:52:00Z', finedust: 57, ozone: 0.007, co: 0.4},
+    {id: 2, date: '2019-09-03T08:42:00Z', finedust: 42, ozone: 0.012, co: 0.6},
+    {id: 3, date: '2019-09-04T08:49:00Z', finedust: 58, ozone: 0.008, co: 0.7},
+    {id: 4, date: '2019-09-05T08:56:00Z', finedust: 62, ozone: 0.007, co: 0.5},
+    {id: 5, date: '2019-09-06T08:50:00Z', finedust: 77, ozone: 0.006, co: 0.6},
+    {id: 6, date: '2019-09-07T08:48:00Z', finedust: 56, ozone: 0.009, co: 0.8},
+    {id: 7, date: '2019-09-08T08:29:00Z', finedust: 44, ozone: 0.012, co: 0.5},
+    {id: 8, date: '2019-09-09T08:39:00Z', finedust: 31, ozone: 0.015, co: 0.4},
+    {id: 9, date: '2019-09-10T08:30:00Z', finedust: 45, ozone: 0.018, co: 0.7},
+    {id: 10, date: '2019-09-11T08:40:00Z', finedust: 40, ozone: 0.021, co: 0.3},
+    {id: 11, date: '2019-09-12T08:44:00Z', finedust: 57, ozone: 0.012, co: 0.4},
+    {id: 12, date: '2019-09-13T08:41:00Z', finedust: 42, ozone: 0.016, co: 0.6},
+    {id: 13, date: '2019-09-14T08:57:00Z', finedust: 39, ozone: 0.013, co: 0.7},
+    {id: 14, date: '2019-09-15T08:43:00Z', finedust: 62, ozone: 0.014, co: 0.4},
+    {id: 15, date: '2019-09-16T08:43:00Z', finedust: 19, ozone: 0.016, co: 1.2},
+    {id: 16, date: '2019-09-17T08:37:00Z', finedust: 56, ozone: 0.017, co: 0.6},
+    {id: 17, date: '2019-09-18T08:49:00Z', finedust: 44, ozone: 0.013, co: 0.7},
+    {id: 18, date: '2019-09-19T08:46:00Z', finedust: 38, ozone: 0.013, co: 0.5},
+    {id: 19, date: '2019-09-20T08:21:00Z', finedust: 45, ozone: 0.016, co: 0.4},
+    {id: 20, date: '2019-09-21T08:44:00Z', finedust: 40, ozone: 0.017, co: 1.0},
+    {id: 21, date: '2019-09-22T08:46:00Z', finedust: 57, ozone: 0.018, co: 0.5},
+    {id: 22, date: '2019-09-23T08:18:00Z', finedust: 42, ozone: 0.017, co: 0.6},
+    {id: 23, date: '2019-09-24T08:43:00Z', finedust: 39, ozone: 0.015, co: 0.7},
+    {id: 24, date: '2019-09-25T08:41:00Z', finedust: 62, ozone: 0.014, co: 0.8},
+    {id: 25, date: '2019-09-26T08:55:00Z', finedust: 19, ozone: 0.013, co: 0.9},
+    {id: 26, date: '2019-09-27T08:47:00Z', finedust: 56, ozone: 0.016, co: 0.6},
+    {id: 27, date: '2019-09-28T08:29:00Z', finedust: 44, ozone: 0.018, co: 0.4},
+    {id: 28, date: '2019-09-29T08:40:00Z', finedust: 38, ozone: 0.016, co: 0.5},
+    {id: 29, date: '2019-09-30T08:31:00Z', finedust: 45, ozone: 0.015, co: 1.1},
 ]
 
-const listDataFineWeek = [
-    {id: 0, date: '2019-09-01T08:44:00Z', finedust: 60},
-    {id: 1, date: '2019-09-02T09:52:00Z', finedust: 57},
-    {id: 2, date: '2019-09-03T08:42:00Z', finedust: 42},
-    {id: 3, date: '2019-09-04T08:49:00Z', finedust: 58},
-    {id: 4, date: '2019-09-05T08:56:00Z', finedust: 62},
-    {id: 5, date: '2019-09-06T08:50:00Z', finedust: 77},
-    {id: 6, date: '2019-09-07T08:48:00Z', finedust: 56},
+const listDataWeek = [
+    {id: 0, date: '2019-09-01T08:44:00Z', finedust: 60, ozone: 0.002, co: 0.5}, // UG/M3, PPM, UG/M3
+    {id: 1, date: '2019-09-02T09:52:00Z', finedust: 57, ozone: 0.007, co: 0.4},
+    {id: 2, date: '2019-09-03T08:42:00Z', finedust: 42, ozone: 0.012, co: 0.6},
+    {id: 3, date: '2019-09-04T08:49:00Z', finedust: 58, ozone: 0.008, co: 0.7},
+    {id: 4, date: '2019-09-05T08:56:00Z', finedust: 62, ozone: 0.007, co: 0.5},
+    {id: 5, date: '2019-09-06T08:50:00Z', finedust: 77, ozone: 0.006, co: 0.6},
+    {id: 6, date: '2019-09-07T08:48:00Z', finedust: 56, ozone: 0.009, co: 0.8},
+]
+
+const listDataMonth = [
+    {id: 0, date: '2019-09-01T08:44:00Z', finedust: 60, ozone: 0.002, co: 0.5}, // UG/M3, PPM, UG/M3
+    {id: 1, date: '2019-09-08T09:52:00Z', finedust: 49, ozone: 0.007, co: 0.4},
+    {id: 2, date: '2019-09-15T08:42:00Z', finedust: 57, ozone: 0.012, co: 0.6},
+    {id: 3, date: '2019-09-22T08:49:00Z', finedust: 66, ozone: 0.008, co: 0.7},
+]
+
+const listDataYear = [
+    {id: 0, date: '2019-01-01T08:44:00Z', finedust: 43, ozone: 0.002, co: 0.5}, // UG/M3, PPM, UG/M3
+    {id: 1, date: '2019-02-01T09:52:00Z', finedust: 61, ozone: 0.007, co: 0.4},
+    {id: 2, date: '2019-03-01T08:42:00Z', finedust: 39, ozone: 0.012, co: 0.6},
+    {id: 3, date: '2019-04-01T08:49:00Z', finedust: 37, ozone: 0.008, co: 0.7},
+    {id: 4, date: '2019-05-01T08:56:00Z', finedust: 62, ozone: 0.007, co: 0.5},
+    {id: 5, date: '2019-06-01T08:50:00Z', finedust: 77, ozone: 0.006, co: 0.6},
+    {id: 6, date: '2019-07-01T08:48:00Z', finedust: 56, ozone: 0.009, co: 0.8},
+    {id: 7, date: '2019-08-01T08:29:00Z', finedust: 44, ozone: 0.012, co: 0.5},
+    {id: 8, date: '2019-09-01T08:39:00Z', finedust: 31, ozone: 0.015, co: 0.4},
+    {id: 9, date: '2019-10-01T08:30:00Z', finedust: 45, ozone: 0.018, co: 0.7},
+    {id: 10, date: '2019-11-01T08:40:00Z', finedust: 40, ozone: 0.021, co: 0.3},
+    {id: 11, date: '2019-12-01T08:44:00Z', finedust: 57, ozone: 0.012, co: 0.4},
 ]
 
 export default class App extends Component<Props> {
@@ -85,17 +107,87 @@ export default class App extends Component<Props> {
       this.state = {
         tabIndex: 0,
         dateString: '2019/09/06 ~ 2019/09/12',
-        average: 60,
-        max: 75,
-        min: 30,
+        average: 0,
+        max: 0,
+        min: 0,
         listYear: 2019,
         isListMode: true,
 
-        listData: listDataFineWeek,
-        graphData: [50, 34, 37, 44, 61, 48, 53],
-        graphLabels: ['1일', '2일' , '3일', '4일', '5일', '6일', '7일'],
+        listData: listDataWeek,
+        graphData: [],
+        graphLabels: [],
         textUnit: 'UG/M3',
       }
+  }
+
+  initData(type) {
+    let newData = [];
+    let newLabels = [];
+    let avg = 0, min = 9999, max = 0;
+
+    switch(type) {
+        case 0:
+            listDataWeek.map(({id, date, finedust, ozone, co}) => {
+                newData.push(finedust);
+                newLabels.push(date.substring(8, 10));
+                avg = avg + finedust;
+                if (min > finedust) min = finedust;
+                if (max < finedust) max = finedust; 
+            })
+            avg = Math.floor(avg / listDataWeek.length);
+            this.setState({
+                listData: listDataWeek,
+                graphData: newData,
+                graphLabels: newLabels,
+                average: avg,
+                max: max,
+                min: min,
+                dateString: '2019/09/01 ~ 2019/09/07',
+            })
+            break;
+        case 1:
+            listDataMonth.map(({id, date, finedust, ozone, co}) => {
+                newData.push(finedust);
+                newLabels.push(date.substring(8, 10));
+                avg = avg + finedust;
+                if (min > finedust) min = finedust;
+                if (max < finedust) max = finedust;
+            })
+            avg = Math.floor(avg / listDataWeek.length);
+            this.setState({
+                listData: listDataMonth,
+                graphData: newData,
+                graphLabels: newLabels,
+                average: avg,
+                max: max,
+                min: min,
+                dateString: '2019/09 ~ 2019/10',
+            })
+            break;
+        case 2:
+        listDataYear.map(({id, date, finedust, ozone, co}) => {
+            newData.push(finedust);
+            newLabels.push(date.substring(5, 7));
+            avg = avg + finedust;
+            if (min > finedust) min = finedust;
+            if (max < finedust) max = finedust;
+        })
+        avg = Math.floor(avg / listDataWeek.length);
+        this.setState({
+            listData: listDataYear,
+            graphData: newData,
+            graphLabels: newLabels,
+            average: avg,
+            max: max,
+            min: min,
+            dateString: '2019/01 ~ 2019/12',
+        })
+            break;
+      }
+  }
+
+  componentDidMount() {
+    this.initData(0);
   }
 
   render() {
@@ -127,6 +219,7 @@ export default class App extends Component<Props> {
                     this.setState({
                         tabIndex: 0,
                     })
+                    this.initData(0);
                 }}
             >
                 <Text style={{
@@ -153,6 +246,7 @@ export default class App extends Component<Props> {
                     this.setState({
                         tabIndex: 1,
                     })
+                    this.initData(1);
                 }}
             >
                 <Text style={{
@@ -179,6 +273,7 @@ export default class App extends Component<Props> {
                     this.setState({
                         tabIndex: 2,
                     })
+                    this.initData(2);
                 }}
             >
                 <Text style={{
