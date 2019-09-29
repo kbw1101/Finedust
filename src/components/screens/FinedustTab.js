@@ -19,6 +19,11 @@ import {
     ICON_RIGHT_TRIANGLE,
 } from '../../utils/icons';
 
+import {
+    LineChart,
+} from 'react-native-chart-kit';
+
+
 const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -30,37 +35,47 @@ const styles = StyleSheet.create({
   
 type Props = {};
 
-const listDataFine = [
-    {id: 0, date: '2019-09-01 08:44', value: 60},
-    {id: 1, date: '2019-09-02 09:52', value: 57},
-    {id: 2, date: '2019-09-03 08:42', value: 42},
-    {id: 3, date: '2019-09-04 08:49', value: 58},
-    {id: 4, date: '2019-09-05 08:56', value: 62},
-    {id: 5, date: '2019-09-06 08:50', value: 77},
-    {id: 6, date: '2019-09-07 08:48', value: 56},
-    {id: 7, date: '2019-09-08 08:29', value: 44},
-    {id: 8, date: '2019-09-09 08:39', value: 31},
-    {id: 9, date: '2019-09-10 08:30', value: 45},
-    {id: 10, date: '2019-09-11 08:40', value: 40},
-    {id: 11, date: '2019-09-12 08:44', value: 57},
-    {id: 12, date: '2019-09-13 08:41', value: 42},
-    {id: 13, date: '2019-09-14 08:57', value: 39},
-    {id: 14, date: '2019-09-15 08:43', value: 62},
-    {id: 15, date: '2019-09-16 08:43', value: 19},
-    {id: 16, date: '2019-09-17 08:37', value: 56},
-    {id: 17, date: '2019-09-18 08:49', value: 44},
-    {id: 18, date: '2019-09-19 08:46', value: 38},
-    {id: 19, date: '2019-09-20 08:21', value: 45},
-    {id: 20, date: '2019-09-21 08:44', value: 40},
-    {id: 21, date: '2019-09-22 08:46', value: 57},
-    {id: 22, date: '2019-09-23 08:18', value: 42},
-    {id: 23, date: '2019-09-24 08:43', value: 39},
-    {id: 24, date: '2019-09-25 08:41', value: 62},
-    {id: 25, date: '2019-09-26 08:55', value: 19},
-    {id: 26, date: '2019-09-27 08:47', value: 56},
-    {id: 27, date: '2019-09-28 08:29', value: 44},
-    {id: 28, date: '2019-09-29 08:40', value: 38},
-    {id: 29, date: '2019-09-30 08:31', value: 45},
+const listDataFineMonth = [
+    {id: 0, date: '2019-09-01T08:44:00Z', finedust: 60},
+    {id: 1, date: '2019-09-02T09:52:00Z', finedust: 57},
+    {id: 2, date: '2019-09-03T08:42:00Z', finedust: 42},
+    {id: 3, date: '2019-09-04T08:49:00Z', finedust: 58},
+    {id: 4, date: '2019-09-05T08:56:00Z', finedust: 62},
+    {id: 5, date: '2019-09-06T08:50:00Z', finedust: 77},
+    {id: 6, date: '2019-09-07T08:48:00Z', finedust: 56},
+    {id: 7, date: '2019-09-08T08:29:00Z', finedust: 44},
+    {id: 8, date: '2019-09-09T08:39:00Z', finedust: 31},
+    {id: 9, date: '2019-09-10T08:30:00Z', finedust: 45},
+    {id: 10, date: '2019-09-11T08:40:00Z', finedust: 40},
+    {id: 11, date: '2019-09-12T08:44:00Z', finedust: 57},
+    {id: 12, date: '2019-09-13T08:41:00Z', finedust: 42},
+    {id: 13, date: '2019-09-14T08:57:00Z', finedust: 39},
+    {id: 14, date: '2019-09-15T08:43:00Z', finedust: 62},
+    {id: 15, date: '2019-09-16T08:43:00Z', finedust: 19},
+    {id: 16, date: '2019-09-17T08:37:00Z', finedust: 56},
+    {id: 17, date: '2019-09-18T08:49:00Z', finedust: 44},
+    {id: 18, date: '2019-09-19T08:46:00Z', finedust: 38},
+    {id: 19, date: '2019-09-20T08:21:00Z', finedust: 45},
+    {id: 20, date: '2019-09-21T08:44:00Z', finedust: 40},
+    {id: 21, date: '2019-09-22T08:46:00Z', finedust: 57},
+    {id: 22, date: '2019-09-23T08:18:00Z', finedust: 42},
+    {id: 23, date: '2019-09-24T08:43:00Z', finedust: 39},
+    {id: 24, date: '2019-09-25T08:41:00Z', finedust: 62},
+    {id: 25, date: '2019-09-26T08:55:00Z', finedust: 19},
+    {id: 26, date: '2019-09-27T08:47:00Z', finedust: 56},
+    {id: 27, date: '2019-09-28T08:29:00Z', finedust: 44},
+    {id: 28, date: '2019-09-29T08:40:00Z', finedust: 38},
+    {id: 29, date: '2019-09-30T08:31:00Z', finedust: 45},
+]
+
+const listDataFineWeek = [
+    {id: 0, date: '2019-09-01T08:44:00Z', finedust: 60},
+    {id: 1, date: '2019-09-02T09:52:00Z', finedust: 57},
+    {id: 2, date: '2019-09-03T08:42:00Z', finedust: 42},
+    {id: 3, date: '2019-09-04T08:49:00Z', finedust: 58},
+    {id: 4, date: '2019-09-05T08:56:00Z', finedust: 62},
+    {id: 5, date: '2019-09-06T08:50:00Z', finedust: 77},
+    {id: 6, date: '2019-09-07T08:48:00Z', finedust: 56},
 ]
 
 export default class App extends Component<Props> {
@@ -75,7 +90,11 @@ export default class App extends Component<Props> {
         min: 30,
         listYear: 2019,
         isListMode: true,
-        listData: listDataFine,
+
+        listData: listDataFineWeek,
+        graphData: [50, 34, 37, 44, 61, 48, 53],
+        graphLabels: ['1일', '2일' , '3일', '4일', '5일', '6일', '7일'],
+        textUnit: 'UG/M3',
       }
   }
 
@@ -285,7 +304,7 @@ export default class App extends Component<Props> {
                             color: 'black',
                             textAlignVertical: 'bottom',
                         }}
-                    >UG/M3
+                    >{this.state.textUnit}
                     </Text>
                 </View>
             </View>
@@ -328,7 +347,7 @@ export default class App extends Component<Props> {
                             color: 'black',
                             textAlignVertical: 'bottom',
                         }}
-                    >UG/M3
+                    >{this.state.textUnit}
                     </Text>
                 </View>
             </View>
@@ -371,7 +390,7 @@ export default class App extends Component<Props> {
                             color: 'black',
                             textAlignVertical: 'bottom',
                         }}
-                    >UG/M3
+                    >{this.state.textUnit}
                     </Text>
                 </View>
             </View>
@@ -382,7 +401,7 @@ export default class App extends Component<Props> {
                 width: '100%',
                 height: '68%',
                 borderRadius: WP('8%'),
-                backgroundColor: 'rgb(220, 220, 220)',
+                backgroundColor: this.state.isListMode ? 'rgb(220, 220, 220)' : 'rgb(240, 240, 240)',
                 justifyContent: 'flex-start',
                 alignItems: 'center',
             }}
@@ -481,7 +500,7 @@ export default class App extends Component<Props> {
                                             fontWeight: 'bold',
                                             color: colors.main,
                                         }}
-                                    >{item.value + " ug/m3"}
+                                    >{item.finedust + " " + this.state.textUnit}
                                     </Text>
 
                                     <Text
@@ -499,7 +518,40 @@ export default class App extends Component<Props> {
                 </View>
             ) : (
                 // Render if selected mode is graph.
-                <View/>
+                <View
+                    style={{
+                        width: '100%',
+                        height: '100%',
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }}
+                >
+                    <LineChart
+                        fromZero
+                        data={{
+                        labels: this.state.graphLabels,
+                        datasets: [{
+                            data: this.state.graphData,
+                            color: (opacity = 1) => colors.main,
+                        }]
+                        }}
+                        width={WP('95%')} // from react-native
+                        height={HP('45%')}
+                        chartConfig={{
+                            backgroundGradientFrom: 'rgb(240, 240, 240)',
+                            backgroundGradientTo: 'rgb(240, 240, 240)',
+                            decimalPlaces: 2, // optional, defaults to 2dp
+                            color: (opacity = 1) => `rgba(50, 50, 50, ${opacity})`,
+                            style: {
+                                borderRadius: 16
+                            }
+                        }}
+                        bezier
+                        style={{
+                            borderRadius: 16,
+                        }}
+                    />
+                </View>
             )}
         </View>
       </View>
