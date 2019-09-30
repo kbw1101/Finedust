@@ -28,6 +28,16 @@ export default class App extends Component<Props> {
     this.requestBluetooth();
 
     request_location_permission();
+
+    this.interval = setInterval(()=> {
+      BluetoothSerial.readFromDevice()
+      .then((data) => {
+          console.log(data);
+          if(data === "wifion") {
+            // Do something when receive data via bluetooth serial.
+          }
+      })
+  }, 50);
   }
 
   render() {

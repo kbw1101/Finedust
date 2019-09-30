@@ -19,12 +19,19 @@ export default class SharedForm extends Component<Props> {
     render() {
         return (
             <TouchableOpacity
-                style={this.props.style}
+                style={[{
+                    position: 'absolute',
+                    width: WP('6%'),
+                    height: WP('6%'),
+                    top: WP('4%'),
+                    left: WP('4%'),
+                    zIndex: 1,
+                }, this.props.style]}
                 onPress={this.props.onPress}
             >
                 <Image
                     source={this.props.source}
-                    style={{width:'100%', height:'100%'}}
+                    style={{width:'100%', height:'100%', tintColor: this.props.tintColor}}
                 />
             </TouchableOpacity>
         );
@@ -33,12 +40,7 @@ export default class SharedForm extends Component<Props> {
 
 SharedForm.defaultProps = {
     style: {
-        position: 'absolute',
-        width: WP('6%'),
-        height: WP('6%'),
-        top: WP('4%'),
-        left: WP('4%'),
-        zIndex: 1,
+        
     },
     source: ICON_BACK,
 }

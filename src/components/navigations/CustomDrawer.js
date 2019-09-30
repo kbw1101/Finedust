@@ -21,6 +21,9 @@ import {
     ICON_DRAWER_RECORD,
     ICON_DRAWER_REVIEW,
 } from '../../utils/icons';
+import LinearGradient from 'react-native-linear-gradient';
+
+import { colors } from '../../utils/styles';
 
 const DrawerItem = ({source, title, onPress}) => {
     return(
@@ -36,13 +39,20 @@ const DrawerItem = ({source, title, onPress}) => {
             }}
             onPress={onPress}
         >
-            <View
+            <LinearGradient
+                colors={['yellow', 'rgb(1, 190, 105)']}
                 style={{
-                    width: '3%',
-                    height: '100%',
-                    backgroundColor: 'yellow',
+                    width: WP('2%'),
+                    height: HP('8%'),
                 }}
-            />
+            >
+                <View
+                    style={{
+                        width: '100%',
+                        height: '100%',
+                    }}
+                />
+            </LinearGradient>
 
             <View
                 style={{

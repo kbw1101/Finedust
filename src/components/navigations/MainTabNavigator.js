@@ -30,6 +30,8 @@ import {
 
 import CustomDrawer from './CustomDrawer';
 
+import LinearGradient from 'react-native-linear-gradient';
+
 const Tab = ({currentIndex, index, title, onPress}) => {
     const mapName = (name) => {
         switch(name) {
@@ -55,13 +57,13 @@ const Tab = ({currentIndex, index, title, onPress}) => {
             <Animated.View
                 style={{
                     width: '100%',
-                    height: '100%',
+                    height: '92.5%',
                     // borderColor: focusAnim.interpolate({
                     //     inputRange: [0, 1],
                     //     outputRange: ['rgba(50, 50, 50, 0)', colors.main],
                     // }),
-                    borderColor: currentIndex === index ? colors.main : 'rgba(50, 50, 50, 0)',
-                    borderBottomWidth: WP('1%'),
+                    // borderColor: currentIndex === index ? colors.main : 'rgba(50, 50, 50, 0)',
+                    // borderBottomWidth: WP('1%'),
                     justifyContent: 'center',
                     alignItems: 'center',
                 }}
@@ -77,6 +79,23 @@ const Tab = ({currentIndex, index, title, onPress}) => {
                 }}>{mapName(title)}
                 </Animated.Text>
             </Animated.View>
+
+            {currentIndex === index ? (
+                <LinearGradient
+                    colors={['yellow', colors.main]}
+                    style={{
+                        width: '100%',
+                        height: '7.5%',
+                    }}
+                    start={{x: 0, y: 0}}
+                    end={{x: 1, y: 0}}
+                >
+                    <View/>
+                </LinearGradient>
+            ) : (
+                <View/>
+            )}
+            
         </TouchableOpacity>
     )
 }
