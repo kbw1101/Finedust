@@ -13,3 +13,7 @@ export const ICON_MEASURE_GOOD = require(ICON_ADDR + 'ICON_MEASURE_GOOD.png');
 export const ICON_MEASURE_NICE = require(ICON_ADDR + 'ICON_MEASURE_NICE.png');
 export const ICON_MEASURE_SOSO = require(ICON_ADDR + 'ICON_MEASURE_SOSO.png');
 export const ICON_MEASURE_QUESTION = require(ICON_ADDR + 'ICON_MEASURE_QUESTION.png');
+export const ICON_HOWTO_LEAF = require(ICON_ADDR + 'ICON_HOWTO_LEAF.png');
+export const ICON_MASK_BOX = require(ICON_ADDR + 'ICON_MASK_BOX.png');
+export const ICON_CAPSULE = require(ICON_ADDR + 'ICON_CAPSULE.png');
+export const ICON_CLEANER = require(ICON_ADDR + 'ICON_CLEANER.png');
