@@ -20,3 +20,4 @@ export const ICON_CLEANER = require(ICON_ADDR + 'ICON_CLEANER.png');
 export const ICON_STAR_WHITE = require(ICON_ADDR + 'ICON_STAR_WHITE.png');
 export const ICON_STAR_BLACK = require(ICON_ADDR + 'ICON_STAR_BLACK.png');
 export const ICON_HEART = require(ICON_ADDR + 'ICON_HEART.png');
+export const ICON_FINEDUST = require(ICON_ADDR + 'ICON_FINEDUST.png');

@@ -11,6 +11,10 @@ import {
 } from 'react-native';
 
 import {
+    ICON_FINEDUST,
+} from '../../utils/icons';
+
+import {
     IMAGE_LOADING,
 } from '../../utils/images';
 
@@ -41,7 +45,7 @@ export default class Loading extends Component<Props> {
             this.setState({
                 visibleBluetoothList: true,
             })
-        }, 2000);
+        }, 3000);
     }
 
     render() {
@@ -191,17 +195,74 @@ export default class Loading extends Component<Props> {
                     style={{
                         width: '100%',
                         height: '100%',
-                        justifyContent: 'center',
+                        justifyContent: 'flex-start',
                         alignItems: 'center',
                     }}
                     resizeMode="stretch"
                 >
+                    <View
+                        style={{
+                            marginTop: HP('20%'),
+                            width: WP('30%'),
+                            height: WP('30%'),
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            borderRadius: WP('3%'),
+                        }}
+                    >
+                        <View
+                            style={{
+                                position: 'absolute',
+                                top: 0,
+                                left: 0,
+                                width: WP('30%'),
+                                height: WP('30%'),
+                                transform: [{rotate: '45deg'}],
+                                zIndex: 0,
+                                backgroundColor: 'rgba(125, 214, 175, 1)',
+                                borderRadius: WP('3%'),
+                            }}
+                        />
+
+                        <View
+                            style={{
+                                position: 'absolute',
+                                top: 0,
+                                left: 0,
+                                width: WP('30%'),
+                                height: WP('30%'),
+                                zIndex: 0,
+                                backgroundColor: 'white',
+                                borderRadius: WP('3%'),
+                            }}
+                        />
+
+                        <Image
+                            source={ICON_FINEDUST}
+                            style={{
+                                width: WP('30%'),
+                                height: WP('30%'),
+                            }}
+                            resizeMode="stretch"
+                        />
+                    </View>
+
+                    <Text
+                        style={{
+                            marginTop: HP('5%'),
+                            fontSize: WP('6%'),
+                            color: 'white',
+                            fontWeight: 'bold',
+                        }}
+                    >미세 측정
+                    </Text>
+
                     {this.state.visibleBluetoothList ? (
                         <View/>
                     ) : (
                         <ActivityIndicator
                             style={{
-                                marginTop: HP('40%'),
+                                marginTop: HP('10%'),
                             }}
                             size={WP('15%')}
                             color='white'
