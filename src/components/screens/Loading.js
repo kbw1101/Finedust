@@ -143,7 +143,7 @@ export default class Loading extends Component<Props> {
                                                 this.setState({
                                                     visibleBluetoothList: false,
                                                 })
-                                                this.props.navigation.navigate('MainTabNavigator');
+                                                this.props.navigation.navigate('Measure');
                                             }}
                                         >
                                             <Text
