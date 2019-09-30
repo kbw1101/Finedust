@@ -16,6 +16,7 @@ import FinedustTab from '../screens/FinedustTab';
 import OzoneTab from '../screens/OzoneTab';
 import Measure from '../screens/Measure';
 import Howto from '../screens/Howto';
+import Review from '../screens/Review';
 
 import {
     widthPercentageToDP as WP,
@@ -206,6 +207,7 @@ const DrawerNavigator = createDrawerNavigator(
         TabNavigator,
         Measure,
         Howto,
+        Review,
     },
     {
         contentComponent: CustomDrawer,

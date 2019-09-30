@@ -17,3 +17,6 @@ export const ICON_HOWTO_LEAF = require(ICON_ADDR + 'ICON_HOWTO_LEAF.png');
 export const ICON_MASK_BOX = require(ICON_ADDR + 'ICON_MASK_BOX.png');
 export const ICON_CAPSULE = require(ICON_ADDR + 'ICON_CAPSULE.png');
 export const ICON_CLEANER = require(ICON_ADDR + 'ICON_CLEANER.png');
+export const ICON_STAR_WHITE = require(ICON_ADDR + 'ICON_STAR_WHITE.png');
+export const ICON_STAR_BLACK = require(ICON_ADDR + 'ICON_STAR_BLACK.png');
+export const ICON_HEART = require(ICON_ADDR + 'ICON_HEART.png');
