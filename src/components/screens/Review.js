@@ -63,7 +63,7 @@ export default class Review extends Component<Props> {
         .then((response) => response.text())
         .then((responseText) => {
             json = JSON.parse(responseText);
-            console.log(json['ITEMS']);
+            // console.log(json['ITEMS']);
 
             this.setState({
                 listData: json['ITEMS'],
@@ -76,7 +76,7 @@ export default class Review extends Component<Props> {
         let today = new Date();
         let todayStr = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate() + ' ' + today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
         let url = 'http://61.106.221.110:8180/Finedust/WriteReview.jsp?nickname=' + this.state.nickname + '&&password=' + this.state.password + '&&rating=' + this.state.rating + '&&date=' + todayStr + '&&content=' + this.state.review;
-        console.log(url);
+        // console.log(url);
 
         await fetch(url, {
             method: 'GET',
