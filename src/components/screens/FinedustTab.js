@@ -23,6 +23,7 @@ import {
     LineChart,
 } from 'react-native-chart-kit';
 
+import AsyncStorage from '@react-native-community/async-storage';
 
 const styles = StyleSheet.create({
     container: {
@@ -35,70 +36,70 @@ const styles = StyleSheet.create({
   
 type Props = {};
 
-const listData = [
-    {id: 0, date: '2019-09-01T08:44:00Z', finedust: 60, ozone: 0.002, co: 0.5}, // UG/M3, PPM, UG/M3
-    {id: 1, date: '2019-09-02T09:52:00Z', finedust: 57, ozone: 0.007, co: 0.4},
-    {id: 2, date: '2019-09-03T08:42:00Z', finedust: 42, ozone: 0.012, co: 0.6},
-    {id: 3, date: '2019-09-04T08:49:00Z', finedust: 58, ozone: 0.008, co: 0.7},
-    {id: 4, date: '2019-09-05T08:56:00Z', finedust: 62, ozone: 0.007, co: 0.5},
-    {id: 5, date: '2019-09-06T08:50:00Z', finedust: 77, ozone: 0.006, co: 0.6},
-    {id: 6, date: '2019-09-07T08:48:00Z', finedust: 56, ozone: 0.009, co: 0.8},
-    {id: 7, date: '2019-09-08T08:29:00Z', finedust: 44, ozone: 0.012, co: 0.5},
-    {id: 8, date: '2019-09-09T08:39:00Z', finedust: 31, ozone: 0.015, co: 0.4},
-    {id: 9, date: '2019-09-10T08:30:00Z', finedust: 45, ozone: 0.018, co: 0.7},
-    {id: 10, date: '2019-09-11T08:40:00Z', finedust: 40, ozone: 0.021, co: 0.3},
-    {id: 11, date: '2019-09-12T08:44:00Z', finedust: 57, ozone: 0.012, co: 0.4},
-    {id: 12, date: '2019-09-13T08:41:00Z', finedust: 42, ozone: 0.016, co: 0.6},
-    {id: 13, date: '2019-09-14T08:57:00Z', finedust: 39, ozone: 0.013, co: 0.7},
-    {id: 14, date: '2019-09-15T08:43:00Z', finedust: 62, ozone: 0.014, co: 0.4},
-    {id: 15, date: '2019-09-16T08:43:00Z', finedust: 19, ozone: 0.016, co: 1.2},
-    {id: 16, date: '2019-09-17T08:37:00Z', finedust: 56, ozone: 0.017, co: 0.6},
-    {id: 17, date: '2019-09-18T08:49:00Z', finedust: 44, ozone: 0.013, co: 0.7},
-    {id: 18, date: '2019-09-19T08:46:00Z', finedust: 38, ozone: 0.013, co: 0.5},
-    {id: 19, date: '2019-09-20T08:21:00Z', finedust: 45, ozone: 0.016, co: 0.4},
-    {id: 20, date: '2019-09-21T08:44:00Z', finedust: 40, ozone: 0.017, co: 1.0},
-    {id: 21, date: '2019-09-22T08:46:00Z', finedust: 57, ozone: 0.018, co: 0.5},
-    {id: 22, date: '2019-09-23T08:18:00Z', finedust: 42, ozone: 0.017, co: 0.6},
-    {id: 23, date: '2019-09-24T08:43:00Z', finedust: 39, ozone: 0.015, co: 0.7},
-    {id: 24, date: '2019-09-25T08:41:00Z', finedust: 62, ozone: 0.014, co: 0.8},
-    {id: 25, date: '2019-09-26T08:55:00Z', finedust: 19, ozone: 0.013, co: 0.9},
-    {id: 26, date: '2019-09-27T08:47:00Z', finedust: 56, ozone: 0.016, co: 0.6},
-    {id: 27, date: '2019-09-28T08:29:00Z', finedust: 44, ozone: 0.018, co: 0.4},
-    {id: 28, date: '2019-09-29T08:40:00Z', finedust: 38, ozone: 0.016, co: 0.5},
-    {id: 29, date: '2019-09-30T08:31:00Z', finedust: 45, ozone: 0.015, co: 1.1},
-]
+// const listData = [
+//     {id: 0, date: '2019-09-01T08:44:00Z', finedust: 60, ozone: 0.002, co: 0.5}, // UG/M3, PPM, UG/M3
+//     {id: 1, date: '2019-09-02T09:52:00Z', finedust: 57, ozone: 0.007, co: 0.4},
+//     {id: 2, date: '2019-09-03T08:42:00Z', finedust: 42, ozone: 0.012, co: 0.6},
+//     {id: 3, date: '2019-09-04T08:49:00Z', finedust: 58, ozone: 0.008, co: 0.7},
+//     {id: 4, date: '2019-09-05T08:56:00Z', finedust: 62, ozone: 0.007, co: 0.5},
+//     {id: 5, date: '2019-09-06T08:50:00Z', finedust: 77, ozone: 0.006, co: 0.6},
+//     {id: 6, date: '2019-09-07T08:48:00Z', finedust: 56, ozone: 0.009, co: 0.8},
+//     {id: 7, date: '2019-09-08T08:29:00Z', finedust: 44, ozone: 0.012, co: 0.5},
+//     {id: 8, date: '2019-09-09T08:39:00Z', finedust: 31, ozone: 0.015, co: 0.4},
+//     {id: 9, date: '2019-09-10T08:30:00Z', finedust: 45, ozone: 0.018, co: 0.7},
+//     {id: 10, date: '2019-09-11T08:40:00Z', finedust: 40, ozone: 0.021, co: 0.3},
+//     {id: 11, date: '2019-09-12T08:44:00Z', finedust: 57, ozone: 0.012, co: 0.4},
+//     {id: 12, date: '2019-09-13T08:41:00Z', finedust: 42, ozone: 0.016, co: 0.6},
+//     {id: 13, date: '2019-09-14T08:57:00Z', finedust: 39, ozone: 0.013, co: 0.7},
+//     {id: 14, date: '2019-09-15T08:43:00Z', finedust: 62, ozone: 0.014, co: 0.4},
+//     {id: 15, date: '2019-09-16T08:43:00Z', finedust: 19, ozone: 0.016, co: 1.2},
+//     {id: 16, date: '2019-09-17T08:37:00Z', finedust: 56, ozone: 0.017, co: 0.6},
+//     {id: 17, date: '2019-09-18T08:49:00Z', finedust: 44, ozone: 0.013, co: 0.7},
+//     {id: 18, date: '2019-09-19T08:46:00Z', finedust: 38, ozone: 0.013, co: 0.5},
+//     {id: 19, date: '2019-09-20T08:21:00Z', finedust: 45, ozone: 0.016, co: 0.4},
+//     {id: 20, date: '2019-09-21T08:44:00Z', finedust: 40, ozone: 0.017, co: 1.0},
+//     {id: 21, date: '2019-09-22T08:46:00Z', finedust: 57, ozone: 0.018, co: 0.5},
+//     {id: 22, date: '2019-09-23T08:18:00Z', finedust: 42, ozone: 0.017, co: 0.6},
+//     {id: 23, date: '2019-09-24T08:43:00Z', finedust: 39, ozone: 0.015, co: 0.7},
+//     {id: 24, date: '2019-09-25T08:41:00Z', finedust: 62, ozone: 0.014, co: 0.8},
+//     {id: 25, date: '2019-09-26T08:55:00Z', finedust: 19, ozone: 0.013, co: 0.9},
+//     {id: 26, date: '2019-09-27T08:47:00Z', finedust: 56, ozone: 0.016, co: 0.6},
+//     {id: 27, date: '2019-09-28T08:29:00Z', finedust: 44, ozone: 0.018, co: 0.4},
+//     {id: 28, date: '2019-09-29T08:40:00Z', finedust: 38, ozone: 0.016, co: 0.5},
+//     {id: 29, date: '2019-09-30T08:31:00Z', finedust: 45, ozone: 0.015, co: 1.1},
+// ]
 
-const listDataWeek = [
-    {id: 0, date: '2019-09-01T08:44:00Z', finedust: 60, ozone: 0.002, co: 0.5}, // UG/M3, PPM, UG/M3
-    {id: 1, date: '2019-09-02T09:52:00Z', finedust: 57, ozone: 0.007, co: 0.4},
-    {id: 2, date: '2019-09-03T08:42:00Z', finedust: 42, ozone: 0.012, co: 0.6},
-    {id: 3, date: '2019-09-04T08:49:00Z', finedust: 58, ozone: 0.008, co: 0.7},
-    {id: 4, date: '2019-09-05T08:56:00Z', finedust: 62, ozone: 0.007, co: 0.5},
-    {id: 5, date: '2019-09-06T08:50:00Z', finedust: 77, ozone: 0.006, co: 0.6},
-    {id: 6, date: '2019-09-07T08:48:00Z', finedust: 56, ozone: 0.009, co: 0.8},
-]
+// const listDataWeek = [
+//     {id: 0, date: '2019-09-01T08:44:00Z', finedust: 60, ozone: 0.002, co: 0.5}, // UG/M3, PPM, UG/M3
+//     {id: 1, date: '2019-09-02T09:52:00Z', finedust: 57, ozone: 0.007, co: 0.4},
+//     {id: 2, date: '2019-09-03T08:42:00Z', finedust: 42, ozone: 0.012, co: 0.6},
+//     {id: 3, date: '2019-09-04T08:49:00Z', finedust: 58, ozone: 0.008, co: 0.7},
+//     {id: 4, date: '2019-09-05T08:56:00Z', finedust: 62, ozone: 0.007, co: 0.5},
+//     {id: 5, date: '2019-09-06T08:50:00Z', finedust: 77, ozone: 0.006, co: 0.6},
+//     {id: 6, date: '2019-09-07T08:48:00Z', finedust: 56, ozone: 0.009, co: 0.8},
+// ]
 
-const listDataMonth = [
-    {id: 0, date: '2019-09-01T08:44:00Z', finedust: 60, ozone: 0.002, co: 0.5}, // UG/M3, PPM, UG/M3
-    {id: 1, date: '2019-09-08T09:52:00Z', finedust: 49, ozone: 0.007, co: 0.4},
-    {id: 2, date: '2019-09-15T08:42:00Z', finedust: 57, ozone: 0.012, co: 0.6},
-    {id: 3, date: '2019-09-22T08:49:00Z', finedust: 66, ozone: 0.008, co: 0.7},
-]
+// const listDataMonth = [
+//     {id: 0, date: '2019-09-01T08:44:00Z', finedust: 60, ozone: 0.002, co: 0.5}, // UG/M3, PPM, UG/M3
+//     {id: 1, date: '2019-09-08T09:52:00Z', finedust: 49, ozone: 0.007, co: 0.4},
+//     {id: 2, date: '2019-09-15T08:42:00Z', finedust: 57, ozone: 0.012, co: 0.6},
+//     {id: 3, date: '2019-09-22T08:49:00Z', finedust: 66, ozone: 0.008, co: 0.7},
+// ]
 
-const listDataYear = [
-    {id: 0, date: '2019-01-01T08:44:00Z', finedust: 43, ozone: 0.002, co: 0.5}, // UG/M3, PPM, UG/M3
-    {id: 1, date: '2019-02-01T09:52:00Z', finedust: 61, ozone: 0.007, co: 0.4},
-    {id: 2, date: '2019-03-01T08:42:00Z', finedust: 39, ozone: 0.012, co: 0.6},
-    {id: 3, date: '2019-04-01T08:49:00Z', finedust: 37, ozone: 0.008, co: 0.7},
-    {id: 4, date: '2019-05-01T08:56:00Z', finedust: 62, ozone: 0.007, co: 0.5},
-    {id: 5, date: '2019-06-01T08:50:00Z', finedust: 77, ozone: 0.006, co: 0.6},
-    {id: 6, date: '2019-07-01T08:48:00Z', finedust: 56, ozone: 0.009, co: 0.8},
-    {id: 7, date: '2019-08-01T08:29:00Z', finedust: 44, ozone: 0.012, co: 0.5},
-    {id: 8, date: '2019-09-01T08:39:00Z', finedust: 31, ozone: 0.015, co: 0.4},
-    {id: 9, date: '2019-10-01T08:30:00Z', finedust: 45, ozone: 0.018, co: 0.7},
-    {id: 10, date: '2019-11-01T08:40:00Z', finedust: 40, ozone: 0.021, co: 0.3},
-    {id: 11, date: '2019-12-01T08:44:00Z', finedust: 57, ozone: 0.012, co: 0.4},
-]
+// const listDataYear = [
+//     {id: 0, date: '2019-01-01T08:44:00Z', finedust: 43, ozone: 0.002, co: 0.5}, // UG/M3, PPM, UG/M3
+//     {id: 1, date: '2019-02-01T09:52:00Z', finedust: 61, ozone: 0.007, co: 0.4},
+//     {id: 2, date: '2019-03-01T08:42:00Z', finedust: 39, ozone: 0.012, co: 0.6},
+//     {id: 3, date: '2019-04-01T08:49:00Z', finedust: 37, ozone: 0.008, co: 0.7},
+//     {id: 4, date: '2019-05-01T08:56:00Z', finedust: 62, ozone: 0.007, co: 0.5},
+//     {id: 5, date: '2019-06-01T08:50:00Z', finedust: 77, ozone: 0.006, co: 0.6},
+//     {id: 6, date: '2019-07-01T08:48:00Z', finedust: 56, ozone: 0.009, co: 0.8},
+//     {id: 7, date: '2019-08-01T08:29:00Z', finedust: 44, ozone: 0.012, co: 0.5},
+//     {id: 8, date: '2019-09-01T08:39:00Z', finedust: 31, ozone: 0.015, co: 0.4},
+//     {id: 9, date: '2019-10-01T08:30:00Z', finedust: 45, ozone: 0.018, co: 0.7},
+//     {id: 10, date: '2019-11-01T08:40:00Z', finedust: 40, ozone: 0.021, co: 0.3},
+//     {id: 11, date: '2019-12-01T08:44:00Z', finedust: 57, ozone: 0.012, co: 0.4},
+// ]
 
 export default class App extends Component<Props> {
   constructor(props) {
@@ -106,6 +107,7 @@ export default class App extends Component<Props> {
 
       this.state = {
         tabIndex: 0,
+        timeIndex: 0,
         dateString: '2019/09/06 ~ 2019/09/12',
         average: 0,
         max: 0,
@@ -113,75 +115,326 @@ export default class App extends Component<Props> {
         listYear: 2019,
         isListMode: true,
 
-        listData: listDataWeek,
+        listData: [],
         graphData: [],
         graphLabels: [],
         textUnit: 'UG/M3',
       }
   }
 
-  initData(type) {
+  initData = async(type) => {
+    let newListData = [];
     let newData = [];
     let newLabels = [];
     let avg = 0, min = 9999, max = 0;
+    let numOfDatas = 0;
+    let datas = null;
+    let dateStrBefore = null;
+    let dateStrAfter = null;
+    let dateBefore = null;
+    let dateAfter = null;
+    let today = null;
 
     switch(type) {
         case 0:
-            listDataWeek.map(({id, date, finedust, ozone, co}) => {
-                newData.push(finedust);
-                newLabels.push(date.substring(8, 10));
-                avg = avg + finedust;
-                if (min > finedust) min = finedust;
-                if (max < finedust) max = finedust; 
-            })
-            avg = Math.floor(avg / listDataWeek.length);
+            datas = await AsyncStorage.getItem('datas');
+            datas = JSON.parse(datas);
+
+            today = new Date();
+
+            dateStrBefore = today.getTime() - (6 * 24 * 60 * 60 * 1000) - (this.state.timeIndex * 7 * 24 * 60 * 60 * 1000);
+            dateBefore = new Date();
+            dateBefore.setTime(dateStrBefore);
+            dateStrBefore = dateBefore.getFullYear() + "/" + (dateBefore.getMonth() + 1) + "/" + dateBefore.getDate();
+            
+            dateStrAfter = today.getTime() - (this.state.timeIndex * 7 * 24 * 60 * 60 * 1000);
+            dateAfter = new Date();
+            dateAfter.setTime(dateStrAfter);
+            dateStrAfter = dateAfter.getFullYear() + "/" + (dateAfter.getMonth() + 1) + "/" + dateAfter.getDate();
+
             this.setState({
-                listData: listDataWeek,
+                dateString: dateStrBefore + " ~ " + dateStrAfter,
+            })
+
+            if(datas !== null)
+            {
+                let lastWeekTime = today.getTime() - (7 * 24 * 60 * 60 * 1000) - (this.state.timeIndex * 7 * 24 * 60 * 60 * 1000);
+
+                for(let i = 1; i<=7; i++)
+                {
+                    let curDayTime = lastWeekTime + (i * 24 * 60 * 60 * 1000);
+                    let curDay = new Date();
+                    curDay.setTime(curDayTime);
+
+                    let has = 0;
+                    for(let data in datas)
+                    {
+                        if(curDay.getFullYear() == datas[data].year)
+                        {
+                            if(curDay.getMonth() + 1 == datas[data].month)
+                            {
+                                if(curDay.getDate() == datas[data].day)
+                                {
+                                    newListData.push(datas[data]);
+                                    newData.push(datas[data].finedust);
+                                    newLabels.push(datas[data].day);
+                                    avg = avg + datas[data].finedust;
+                                    numOfDatas = numOfDatas + 1;
+                                    if(min > datas[data].finedust) min = datas[data].finedust;
+                                    if(max < datas[data].finedust) max = datas[data].finedust;
+                                    has = 1;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if(has == 0) {
+                        let obj = new Object();
+                        obj.year = curDay.getFullYear();
+                        obj.month = curDay.getMonth() + 1;
+                        obj.day = curDay.getDate();
+                        obj.hour = curDay.getHours();
+                        obj.minute = curDay.getMinutes();
+                        obj.second = curDay.getSeconds();
+                        obj.finedust = -1;
+                        obj.co = -1;
+                        obj.h = -1;
+                        newListData.push(obj);
+                        newData.push(0);
+                        newLabels.push(curDay.getDate());    
+                    }
+                }
+            }
+            else {
+                for(let i = 0; i<7; i++)
+                {
+                    let obj = new Object();
+                    obj.year = 0;
+                    obj.month = 0;
+                    obj.day = 0;
+                    obj.hour = 0;
+                    obj.minute = 0;
+                    obj.second = 0;
+                    obj.finedust = -1;
+                    obj.co = -1;
+                    obj.h = -1;
+                    newListData.push(obj);
+                    newData.push(0);
+                    newLabels.push(0);    
+                }
+            }
+
+            if(numOfDatas != 0) avg = avg / numOfDatas;
+            if(min == 9999) min = 0;
+            this.setState({
+                listData: newListData,
                 graphData: newData,
                 graphLabels: newLabels,
-                average: avg,
+                avergae: avg,
                 max: max,
                 min: min,
-                dateString: '2019/09/01 ~ 2019/09/07',
             })
             break;
         case 1:
-            listDataMonth.map(({id, date, finedust, ozone, co}) => {
-                newData.push(finedust);
-                newLabels.push(date.substring(8, 10));
-                avg = avg + finedust;
-                if (min > finedust) min = finedust;
-                if (max < finedust) max = finedust;
-            })
-            avg = Math.floor(avg / listDataWeek.length);
+            datas = await AsyncStorage.getItem('datas');
+            datas = JSON.parse(datas);
+
+            today = new Date();
+
+            dateStrBefore = today.getTime() - (28 * 24 * 60 * 60 * 1000) - (this.state.timeIndex * 28 * 24 * 60 * 60 * 1000);
+            dateStrAfter = dateStrBefore + (28 * 24 * 60 * 60 * 1000);
+            dateBefore = new Date();
+            dateBefore.setTime(dateStrBefore);
+            dateStrBefore = dateBefore.getFullYear() + "/" + (dateBefore.getMonth() + 1) + "/" + dateBefore.getDate();
+            
+            dateAfter = new Date();
+            dateAfter.setTime(dateStrAfter);
+            dateStrAfter = dateAfter.getFullYear() + "/" + (dateAfter.getMonth() + 1) + "/" + dateAfter.getDate();
+
             this.setState({
-                listData: listDataMonth,
+                dateString: dateStrBefore + " ~ " + dateStrAfter,
+            })
+
+            if(datas !== null)
+            {
+                let today = new Date();
+                let lastMonthTime = today.getTime() - (28 * 24 * 60 * 60 * 1000) - (this.state.timeIndex * 28 * 24 * 60 * 60 * 1000);
+                let lastMonth = new Date();
+                lastMonth.setTime(lastMonthTime);
+                lastMonth.setHours(23);
+                lastMonth.setMinutes(59);
+                lastMonthTime = lastMonth.getTime();
+
+                for(let i = 0; i<4; i++)
+                {
+                    let curDayBeforeTime = lastMonthTime + (7 * i * 24 * 60 * 60 * 1000);
+                    let curDayBefore = new Date();
+                    curDayBefore.setTime(curDayBeforeTime);
+                    let curDayAfterTime = curDayBeforeTime + (7 * 24 * 60 * 60 * 1000);
+                    let curDayAfter = new Date();
+                    curDayAfter.setTime(curDayAfterTime);
+
+                    let has = 0;
+                    for(let data in datas)
+                    {
+                        let dataDate = new Date();
+                        dataDate.setFullYear(datas[data].year);
+                        dataDate.setMonth(datas[data].month - 1);
+                        dataDate.setDate(datas[data].day);
+                        let dataDateTime = dataDate.getTime();
+                        console.log('----- cmp');
+                        console.log(dataDateTime);
+                        console.log(curDayBeforeTime);
+                        console.log(curDayAfterTime);
+                        if(curDayBeforeTime <= dataDateTime && dataDateTime <= curDayAfterTime)
+                        {
+                                newListData.push(datas[data]);
+                                newData.push(datas[data].finedust);
+                                newLabels.push(datas[data].day);
+                                avg = avg + datas[data].finedust;
+                                numOfDatas = numOfDatas + 1;
+                                if(min > datas[data].finedust) min = datas[data].finedust;
+                                if(max < datas[data].finedust) max = datas[data].finedust;
+                                has = 1;
+                                break;
+                        }
+                    }
+                    if(has == 0) {
+                        let obj = new Object();
+                        obj.year = curDayBefore.getFullYear();
+                        obj.month = curDayBefore.getMonth() + 1;
+                        obj.day = curDayBefore.getDate();
+                        obj.hour = curDayBefore.getHours();
+                        obj.minute = curDayBefore.getMinutes();
+                        obj.second = curDayBefore.getSeconds();
+                        obj.finedust = -1;
+                        obj.co = -1;
+                        obj.h = -1;
+                        newListData.push(obj);
+                        newData.push(0);
+                        newLabels.push(curDayBefore.getDate());    
+                    }
+                }
+            }
+            else {
+                for(let i = 0; i<4; i++)
+                {
+                    let obj = new Object();
+                    obj.year = 0;
+                    obj.month = 0;
+                    obj.day = 0;
+                    obj.hour = 0;
+                    obj.minute = 0;
+                    obj.second = 0;
+                    obj.finedust = -1;
+                    obj.co = -1;
+                    obj.h = -1;
+                    newListData.push(obj);
+                    newData.push(0);
+                    newLabels.push(0);    
+                }
+            }
+
+            if(numOfDatas != 0) avg = avg / numOfDatas;
+            if(min == 9999) min = 0;
+            this.setState({
+                listData: newListData,
                 graphData: newData,
                 graphLabels: newLabels,
-                average: avg,
+                avergae: avg,
                 max: max,
                 min: min,
-                dateString: '2019/09 ~ 2019/10',
             })
             break;
         case 2:
-        listDataYear.map(({id, date, finedust, ozone, co}) => {
-            newData.push(finedust);
-            newLabels.push(date.substring(5, 7));
-            avg = avg + finedust;
-            if (min > finedust) min = finedust;
-            if (max < finedust) max = finedust;
-        })
-        avg = Math.floor(avg / listDataWeek.length);
-        this.setState({
-            listData: listDataYear,
-            graphData: newData,
-            graphLabels: newLabels,
-            average: avg,
-            max: max,
-            min: min,
-            dateString: '2019/01 ~ 2019/12',
-        })
+            datas = await AsyncStorage.getItem('datas');
+            datas = JSON.parse(datas);
+
+            today = new Date();
+            let thisYear = today.getTime() - (this.state.timeIndex * 365 * 24 * 60 * 60 * 1000);
+            let thisYearDate = new Date();
+            thisYearDate.setTime(thisYear);
+            dateStrBefore = thisYearDate.getFullYear() + "/" + "1";
+            dateStrAfter = thisYearDate.getFullYear() + "/" + "12";
+            
+            this.setState({
+                dateString: dateStrBefore + " ~ " + dateStrAfter,
+            })
+
+            if(datas !== null)
+            {
+                let year = new Date();
+                let yearTime = year.getTime() - (this.state.timeIndex * 365 * 24 * 60 * 60 * 1000);
+                year.setTime(yearTime);
+                year = year.getFullYear();
+
+                for(let i = 1; i<=12; i++)
+                {
+                    let has = 0;
+                    for(let data in datas)
+                    {
+                        if(year == datas[data].year)
+                        {
+                            if(i == datas[data].month)
+                            {
+                                newListData.push(datas[data]);
+                                newData.push(datas[data].finedust);
+                                newLabels.push(datas[data].day);
+                                avg = avg + datas[data].finedust;
+                                numOfDatas = numOfDatas + 1;
+                                if(min > datas[data].finedust) min = datas[data].finedust;
+                                if(max < datas[data].finedust) max = datas[data].finedust;
+                                has = 1;
+                                break;
+                            }
+                        }
+                    }
+                    if(has == 0) {
+                        let obj = new Object();
+                        obj.year = year
+                        obj.month = i;
+                        obj.day = 1;
+                        obj.hour = 1;
+                        obj.minute = 1;
+                        obj.second = 1;
+                        obj.finedust = -1;
+                        obj.co = -1;
+                        obj.h = -1;
+                        newListData.push(obj);
+                        newData.push(0);
+                        newLabels.push(i);    
+                    }
+                }
+            }
+            else {
+                for(let i = 0; i<12; i++)
+                {
+                    let obj = new Object();
+                    obj.year = 0;
+                    obj.month = 0;
+                    obj.day = 0;
+                    obj.hour = 0;
+                    obj.minute = 0;
+                    obj.second = 0;
+                    obj.finedust = -1;
+                    obj.co = -1;
+                    obj.h = -1;
+                    newListData.push(obj);
+                    newData.push(0);
+                    newLabels.push(0);    
+                }
+            }
+
+            if(numOfDatas != 0) avg = avg / numOfDatas;
+            if(min == 9999) min = 0;
+            this.setState({
+                listData: newListData,
+                graphData: newData,
+                graphLabels: newLabels,
+                avergae: avg,
+                max: max,
+                min: min,
+            })  
             break;
       }
   }
@@ -302,7 +555,10 @@ export default class App extends Component<Props> {
                     alignItems: 'center',
                 }}
                 onPress={()=>{
-
+                    this.setState({
+                        timeIndex: this.state.timeIndex + 1,
+                    })
+                    this.initData(this.state.tabIndex);
                 }}
             >
                 <Image
@@ -337,7 +593,12 @@ export default class App extends Component<Props> {
                     alignItems: 'center',
                 }}
                 onPress={()=>{
-
+                    if(this.state.timeIndex > 0) {
+                        this.setState({
+                            timeIndex: this.state.timeIndex - 1,
+                        })
+                    }
+                    this.initData(this.state.tabIndex);
                 }}
             >
                 <Image
@@ -583,30 +844,34 @@ export default class App extends Component<Props> {
                                 <View
                                     style={{
                                         width: '100%',
-                                        height: HP('8%'),
+                                        height: item.finedust === -1 ? 0 : HP('8%'),
                                         justifyContent: 'center',
                                         alignItems: 'flex-start',
-                                        borderBottomWidth: 2,
+                                        borderBottomWidth: item.finedust === -1 ? 0 : 2,
                                         borderColor: 'white',
                                     }}
                                 >
-                                    <Text
-                                        style={{
-                                            fontSize: WP('4.5%'),
-                                            fontWeight: 'bold',
-                                            color: colors.main,
-                                        }}
-                                    >{item.finedust + " " + this.state.textUnit}
-                                    </Text>
+                                    {item.finedust === -1 ? (<View/>) : (
+                                        <View>
+                                        <Text
+                                            style={{
+                                                fontSize: WP('4.5%'),
+                                                fontWeight: 'bold',
+                                                color: colors.main,
+                                            }}
+                                        >{item.finedust + " " + this.state.textUnit}
+                                        </Text>
 
-                                    <Text
-                                        style={{
-                                            marginTop: HP('0.5%'),
-                                            fontSize: WP('3%'),
-                                            color: 'black',
-                                        }}
-                                    >{item.date.substring(0, 4) + "년 " + item.date.substring(5, 7) + "월 " + item.date.substring(8, 10) + "일 " + item.date.substring(11, 13) + "시 " + item.date.substring(14, 16) + "분"}
-                                    </Text>
+                                        <Text
+                                            style={{
+                                                marginTop: HP('0.5%'),
+                                                fontSize: WP('3%'),
+                                                color: 'black',
+                                            }}
+                                        >{item.year + "년 " + item.month + "월 " + item.day + "일 " + item.hour + "시 " + item.minute + "분"}
+                                        </Text>
+                                        </View>
+                                    )}
                                 </View>
                             }
                         />

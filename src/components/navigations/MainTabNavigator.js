@@ -40,7 +40,7 @@ const Tab = ({currentIndex, index, title, onPress}) => {
             case 'FinedustTab':
                 return '미세먼지';
             case 'OzoneTab':
-                return '오존';
+                return '수소';
             case 'COTab':
                 return '일산화탄소';
         }

@@ -7,6 +7,12 @@ import BluetoothSerial from 'react-native-bluetooth-serial-next';
 
 import RootSwitchNavigator from './src/components/navigations/RootSwitchNavigator';
 
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import combineReducer from './reducers/index';
+
+const store = createStore(combineReducer);
+
 export default class App extends Component<Props> {
   async requestBluetooth() {
     const isEnabled = await BluetoothSerial.isEnabled();
@@ -28,21 +34,13 @@ export default class App extends Component<Props> {
     this.requestBluetooth();
 
     request_location_permission();
-
-    this.interval = setInterval(()=> {
-      BluetoothSerial.readFromDevice()
-      .then((data) => {
-          console.log(data);
-          if(data === "wifion") {
-            // Do something when receive data via bluetooth serial.
-          }
-      })
-  }, 50);
   }
 
   render() {
     return (
-      <RootSwitchNavigator/>
+      <Provider store={store}>
+        <RootSwitchNavigator/>
+      </Provider>
     );
   }
 }

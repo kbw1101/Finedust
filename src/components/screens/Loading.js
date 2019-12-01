@@ -27,25 +27,51 @@ import {
     colors,
 } from '../../utils/styles';
 
+import BluetoothSerial from 'react-native-bluetooth-serial-next';
+
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { actionSetBluetooth } from '../../../actions/index';
+
 const dummyListData = [
     {id: 0, name: 'FB155V2.2.1', mac: '00:19:01:37:7F:CC'},
     {id: 1, name: 'YONGDEV', mac: '60:6C66:BA:C3:D0'},
 ]
 
-export default class Loading extends Component<Props> {
+class Loading extends Component<Props> {
+    mytimeout = null;
+
+    permissionCheck() {
+        BluetoothSerial.disconnectAll();
+        BluetoothSerial.discoverUnpairedDevices()
+        .then((values) => {
+            if(this.state.selectFlag == false) {
+                this.setState({
+                    listData: values,
+                    visibleBluetoothList: true,
+                })
+            }
+        })
+        .catch((err) => {
+        })
+
+        if(this.state.visibleBluetoothList == true) {
+            mytimeout = setTimeout(() => {
+                this.permissionCheck();
+            }, 3000);
+        }
+    }
+
     constructor(props) {
         super(props);
 
         this.state = {
             visibleBluetoothList: false,
-            listData: dummyListData,
+            listData: [],
+            selectFlag: false,
         };
 
-        setTimeout(()=>{
-            this.setState({
-                visibleBluetoothList: true,
-            })
-        }, 3000);
+        this.permissionCheck();
     }
 
     render() {
@@ -142,8 +168,28 @@ export default class Loading extends Component<Props> {
                                             onPress={()=>{
                                                 this.setState({
                                                     visibleBluetoothList: false,
+                                                    selectFlag: true,
                                                 })
-                                                this.props.navigation.navigate('Measure');
+
+                                                BluetoothSerial.connect(item.address)
+                                                .then((res) => {
+                                                    this.props.actionSetBluetooth(item);
+
+                                                    console.log(res);
+                                                    this.setState({
+                                                        visibleBluetoothList: false,
+                                                    })
+                                                    clearTimeout(this.mytimeout);
+                                                    this.props.navigation.navigate('Measure');
+                                                })
+                                                .catch((err) => {
+                                                    console.log(err)
+                                                    this.setState({
+                                                        visibleBluetoothList: false,
+                                                        selectFlag: false,
+                                                    })
+                                                    this.permissionCheck();
+                                                });
                                             }}
                                         >
                                             <Text
@@ -159,7 +205,7 @@ export default class Loading extends Component<Props> {
                                                     fontSize: WP('3.5%'),
                                                     color: 'gray',
                                                 }}
-                                            >{item.mac}
+                                            >{item.address}
                                             </Text>
                                         </TouchableOpacity>
                                     }
@@ -274,3 +320,14 @@ export default class Loading extends Component<Props> {
         )
     }
 }
+
+const mapStateToProps = (state) => {
+    const { bluetoothReducer } = state;
+    return { bluetoothReducer};
+}
+const mapDispatchToProps = dispatch => (
+    bindActionCreators({
+        actionSetBluetooth,
+    }, dispatch)
+);
+export default connect(mapStateToProps, mapDispatchToProps)(Loading);

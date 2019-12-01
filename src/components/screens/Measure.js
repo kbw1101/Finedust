@@ -34,6 +34,15 @@ import LinearGradient from 'react-native-linear-gradient';
 
 import * as Progress from 'react-native-progress';
 import { Easing } from 'react-native-reanimated';
+
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { actionSetBluetooth } from '../../../actions/index';
+
+import BluetoothSerial from 'react-native-bluetooth-serial-next';
+
+import AsyncStorage from '@react-native-community/async-storage';
+
 const MeasureBox = ({title, unit, value, nice, good, soso}) => {
     return(
         <BoxShadow
@@ -122,24 +131,108 @@ const MeasureBox = ({title, unit, value, nice, good, soso}) => {
     )
 }
 
-export default class Measure extends Component<Props> {
+class Measure extends Component<Props> {
     constructor(props) {
         super(props);
 
         this.state = {
-            lastRecord: '2019/09/30 08:44:52',
-            finedust: 60,
-            ozone: 0.001,
-            co: 0.3,
+            lastRecord: '정보 없음',
+            finedust: 0,
+            ozone: 0.0,
+            co: 0.0,
             isRecording: false,
             visibleHowto: false,
         }
     }
 
+    setData = async(obj) => {
+        try {
+            let datas = await AsyncStorage.getItem('datas');
+            if(datas !== null)
+            {
+                datas = JSON.parse(datas);
+
+                let has = 0;
+                let today = new Date();
+                let year = today.getFullYear();
+                let month = today.getMonth() + 1;
+                let day = today.getDate();
+                let todayString = year + "/" + month + "/" + day;
+                for(let data in datas)
+                {
+                    if(todayString == data) {
+                        has = 1;
+                    }
+                }
+
+                if(has == 0)
+                {
+                    datas[todayString] = obj;
+                }
+                let newDatasToString = JSON.stringify(datas);
+                console.log(newDatasToString);
+                await AsyncStorage.setItem('datas', newDatasToString);
+            } else {
+                let newDatas = new Object();
+                let keyData = obj.year + "/" + obj.month + "/" + obj.day;
+                newDatas[keyData] = obj;
+                console.log(newDatas);
+                let neWDatasToString = JSON.stringify(newDatas);
+                await AsyncStorage.setItem('datas', neWDatasToString);
+            }
+        }
+        catch (e) {
+            // error handling.
+            console.log(e);
+        }
+    }
+
     componentDidMount() {
+        this.interval = setInterval(()=> {
+            BluetoothSerial.readFromDevice()
+            .then((data) => {
+
+                data_split = data.split(',');
+
+                if(data_split.length == 6 && this.state.isRecording == true)
+                {
+                    today = new Date();
+                    year = today.getFullYear();
+                    month = today.getMonth() + 1;
+                    day = today.getDate();
+                    hour = today.getHours();
+                    minute = today.getMinutes();
+                    second = today.getSeconds();
+
+                    obj = new Object();
+                    obj.year = year;
+                    obj.month = month;
+                    obj.day = day;
+                    obj.hour = hour;
+                    obj.minute = minute;
+                    obj.second = second;
+                    obj.finedust = data_split[0];
+                    obj.co = data_split[4];
+                    obj.h = data_split[5];
+                    this.setData(obj);
+
+                    this.setState({
+                        lastRecord: year + "/" + month + "/" + day + " " + hour + ":" + minute + ":" + second,
+                        finedust: data_split[0],
+                        ozone: data_split[5],
+                        co: data_split[4],
+                    })
+                }
+            })
+            .catch((error) => {
+                console.log('read error!');
+                console.log(error);
+            })
+        }, 50);
     }
 
     componentWillUnmount() {
+        clearInterval(this.interval);
     }
 
     render() {
@@ -509,7 +602,7 @@ export default class Measure extends Component<Props> {
                                                     borderWidth: 2,
                                                     borderColor: colors.cloudy,
                                                 }}
-                                            >오존
+                                            >수소
                                             </Text>
                                             <Text
                                                 style={{
@@ -521,7 +614,7 @@ export default class Measure extends Component<Props> {
                                                     borderWidth: 2,
                                                     borderColor: colors.cloudy,
                                                 }}
-                                            >0~0.03
+                                            >0~0.5
                                             </Text>
                                             <Text
                                                 style={{
@@ -533,7 +626,7 @@ export default class Measure extends Component<Props> {
                                                     borderWidth: 2,
                                                     borderColor: colors.cloudy,
                                                 }}
-                                            >0.03~0.09
+                                            >0.5~0.75
                                             </Text>
                                             <Text
                                                 style={{
@@ -545,7 +638,7 @@ export default class Measure extends Component<Props> {
                                                     borderWidth: 2,
                                                     borderColor: colors.cloudy,
                                                 }}
-                                            >0.09~0.15
+                                            >0.75~1.0
                                             </Text>
                                             <Text
                                                 style={{
@@ -557,7 +650,7 @@ export default class Measure extends Component<Props> {
                                                     borderWidth: 2,
                                                     borderColor: colors.cloudy,
                                                 }}
-                                            >0.15~
+                                            >1.0~
                                             </Text>
                                         </View>
 
@@ -591,7 +684,7 @@ export default class Measure extends Component<Props> {
                                                     borderWidth: 2,
                                                     borderColor: colors.cloudy,
                                                 }}
-                                            >0~2
+                                            >0~0.5
                                             </Text>
                                             <Text
                                                 style={{
@@ -603,7 +696,7 @@ export default class Measure extends Component<Props> {
                                                     borderWidth: 2,
                                                     borderColor: colors.cloudy,
                                                 }}
-                                            >2~9
+                                            >0.5~0.75
                                             </Text>
                                             <Text
                                                 style={{
@@ -615,7 +708,7 @@ export default class Measure extends Component<Props> {
                                                     borderWidth: 2,
                                                     borderColor: colors.cloudy,
                                                 }}
-                                            >9~15
+                                            >0.75~1.0
                                             </Text>
                                             <Text
                                                 style={{
@@ -627,7 +720,7 @@ export default class Measure extends Component<Props> {
                                                     borderWidth: 2,
                                                     borderColor: colors.cloudy,
                                                 }}
-                                            >15~
+                                            >1.0~
                                             </Text>
                                         </View>
                                     </View>
@@ -642,7 +735,7 @@ export default class Measure extends Component<Props> {
                                             textAlign: 'left',
                                             textAlignVertical: 'center',
                                         }}
-                                    >* 미세먼지, 오존, 일산화탄소는 현재위치에서의 수치를 측정한 것입니다.
+                                    >* 미세먼지, 수소, 일산화탄소는 현재위치에서의 수치를 측정한 것입니다.
                                     </Text>
                                 </View>
                             </View>
@@ -737,6 +830,21 @@ export default class Measure extends Component<Props> {
                             }}
                             onPress={()=>{
                                 // Do push.
+                                setTimeout(() => {
+                                    this.setState({
+                                        isRecording: false,
+                                    })
+                                }, 10000);
+
+                                if(this.state.isRecording == true)
+                                {
+                                    //this.props.bluetoothReducer.current
+                                    BluetoothSerial.write("rend");
+                                }
+                                else{
+                                    BluetoothSerial.write("rstart");
+                                }
+
                                 this.setState({
                                     isRecording: !this.state.isRecording,
                                 })
@@ -849,12 +957,12 @@ export default class Measure extends Component<Props> {
                             />
 
                             <MeasureBox
-                                title="오존"
+                                title="수소"
                                 unit="PPM"
                                 value={this.state.ozone}
-                                nice={0.001}
-                                good={0.002}
-                                soso={0.003}
+                                nice={0.5}
+                                good={0.75}
+                                soso={1.0}
                             />
                         </View>
 
@@ -949,3 +1057,9 @@ export default class Measure extends Component<Props> {
         )
     }
 }
+
+const mapStateToProps = (state) => {
+    const { bluetoothReducer } = state;
+    return { bluetoothReducer };
+}
+export default connect(mapStateToProps)(Measure);
