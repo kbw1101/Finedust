@@ -25,6 +25,8 @@ import LinearGradient from 'react-native-linear-gradient';
 
 import { colors } from '../../utils/styles';
 
+import BluetoothSerial from 'react-native-bluetooth-serial-next';
+
 const DrawerItem = ({source, title, onPress}) => {
     return(
         <TouchableOpacity
@@ -146,6 +148,14 @@ export default class App extends Component<Props> {
                     title="리뷰"
                     onPress={()=>{
                         this.props.navigation.navigate('Review');
+                    }}
+                />
+
+                <DrawerItem
+                    source={ICON_DRAWER_MEASURE}
+                    title="보관함 세척"
+                    onPress={()=>{
+                        BluetoothSerial.write('clear');
                     }}
                 />
             </View>
