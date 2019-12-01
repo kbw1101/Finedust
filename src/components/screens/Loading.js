@@ -42,6 +42,10 @@ class Loading extends Component<Props> {
     mytimeout = null;
 
     permissionCheck() {
+        this.setState({
+            visibleBluetoothList: false,
+        })
+
         BluetoothSerial.disconnectAll();
         BluetoothSerial.discoverUnpairedDevices()
         .then((values) => {
@@ -221,6 +225,9 @@ class Loading extends Component<Props> {
                                     backgroundColor: colors.main,
                                     borderBottomStartRadius: WP('5%'),
                                     borderBottomEndRadius: WP('5%'),
+                                }}
+                                onPress={()=>{
+                                    this.permissionCheck();
                                 }}
                             >
                                 <Text

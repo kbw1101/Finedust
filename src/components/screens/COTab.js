@@ -178,7 +178,7 @@ export default class App extends Component<Props> {
                                     newListData.push(datas[data]);
                                     newData.push(datas[data].co);
                                     newLabels.push(datas[data].day);
-                                    avg = avg + datas[data].co;
+                                    avg = avg + parseFloat(datas[data].co);
                                     numOfDatas = numOfDatas + 1;
                                     if(min > datas[data].co) min = datas[data].co;
                                     if(max < datas[data].co) max = datas[data].co;
@@ -230,7 +230,7 @@ export default class App extends Component<Props> {
                 listData: newListData,
                 graphData: newData,
                 graphLabels: newLabels,
-                avergae: avg,
+                average: avg,
                 max: max,
                 min: min,
             })
@@ -287,7 +287,7 @@ export default class App extends Component<Props> {
                                 newListData.push(datas[data]);
                                 newData.push(datas[data].co);
                                 newLabels.push(datas[data].day);
-                                avg = avg + datas[data].co;
+                                avg = avg + parseFloat(datas[data].co);
                                 numOfDatas = numOfDatas + 1;
                                 if(min > datas[data].co) min = datas[data].co;
                                 if(max < datas[data].co) max = datas[data].co;
@@ -337,7 +337,7 @@ export default class App extends Component<Props> {
                 listData: newListData,
                 graphData: newData,
                 graphLabels: newLabels,
-                avergae: avg,
+                average: avg,
                 max: max,
                 min: min,
             })
@@ -376,7 +376,7 @@ export default class App extends Component<Props> {
                                 newListData.push(datas[data]);
                                 newData.push(datas[data].co);
                                 newLabels.push(datas[data].day);
-                                avg = avg + datas[data].co;
+                                avg = avg + parseFloat(datas[data].co);
                                 numOfDatas = numOfDatas + 1;
                                 if(min > datas[data].co) min = datas[data].co;
                                 if(max < datas[data].co) max = datas[data].co;
@@ -427,7 +427,7 @@ export default class App extends Component<Props> {
                 listData: newListData,
                 graphData: newData,
                 graphLabels: newLabels,
-                avergae: avg,
+                average: avg,
                 max: max,
                 min: min,
             })  
@@ -646,7 +646,7 @@ export default class App extends Component<Props> {
                             fontWeight: 'bold',
                             textAlignVertical: 'bottom',
                         }}
-                    >{this.state.average}
+                    >{this.state.average.toFixed(1)}
                     </Text>
 
                     <Text

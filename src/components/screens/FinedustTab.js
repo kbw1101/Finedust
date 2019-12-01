@@ -178,7 +178,7 @@ export default class App extends Component<Props> {
                                     newListData.push(datas[data]);
                                     newData.push(datas[data].finedust);
                                     newLabels.push(datas[data].day);
-                                    avg = avg + datas[data].finedust;
+                                    avg = avg + parseFloat(datas[data].finedust);
                                     numOfDatas = numOfDatas + 1;
                                     if(min > datas[data].finedust) min = datas[data].finedust;
                                     if(max < datas[data].finedust) max = datas[data].finedust;
@@ -230,10 +230,11 @@ export default class App extends Component<Props> {
                 listData: newListData,
                 graphData: newData,
                 graphLabels: newLabels,
-                avergae: avg,
+                average: avg,
                 max: max,
                 min: min,
             })
+
             break;
         case 1:
             datas = await AsyncStorage.getItem('datas');
@@ -282,16 +283,12 @@ export default class App extends Component<Props> {
                         dataDate.setMonth(datas[data].month - 1);
                         dataDate.setDate(datas[data].day);
                         let dataDateTime = dataDate.getTime();
-                        console.log('----- cmp');
-                        console.log(dataDateTime);
-                        console.log(curDayBeforeTime);
-                        console.log(curDayAfterTime);
                         if(curDayBeforeTime <= dataDateTime && dataDateTime <= curDayAfterTime)
                         {
                                 newListData.push(datas[data]);
                                 newData.push(datas[data].finedust);
                                 newLabels.push(datas[data].day);
-                                avg = avg + datas[data].finedust;
+                                avg = avg + parseFloat(datas[data].finedust);
                                 numOfDatas = numOfDatas + 1;
                                 if(min > datas[data].finedust) min = datas[data].finedust;
                                 if(max < datas[data].finedust) max = datas[data].finedust;
@@ -341,7 +338,7 @@ export default class App extends Component<Props> {
                 listData: newListData,
                 graphData: newData,
                 graphLabels: newLabels,
-                avergae: avg,
+                average: avg,
                 max: max,
                 min: min,
             })
@@ -380,7 +377,7 @@ export default class App extends Component<Props> {
                                 newListData.push(datas[data]);
                                 newData.push(datas[data].finedust);
                                 newLabels.push(datas[data].day);
-                                avg = avg + datas[data].finedust;
+                                avg = avg + parseFloat(datas[data].finedust);
                                 numOfDatas = numOfDatas + 1;
                                 if(min > datas[data].finedust) min = datas[data].finedust;
                                 if(max < datas[data].finedust) max = datas[data].finedust;
@@ -431,7 +428,7 @@ export default class App extends Component<Props> {
                 listData: newListData,
                 graphData: newData,
                 graphLabels: newLabels,
-                avergae: avg,
+                average: avg,
                 max: max,
                 min: min,
             })  
@@ -650,7 +647,7 @@ export default class App extends Component<Props> {
                             fontWeight: 'bold',
                             textAlignVertical: 'bottom',
                         }}
-                    >{this.state.average}
+                    >{this.state.average.toFixed(1)}
                     </Text>
 
                     <Text

@@ -45,8 +45,57 @@ export default class Review extends Component<Props> {
             password: '',
             rating: 4,
             review: '',
-            listData: dummyListData,
+            listData: [],
         }
+    }
+
+    async getReviews() 
+    {
+        let url = 'http://61.106.221.110:8180/Finedust/GetReviews.jsp';
+
+        await fetch(url, {
+            method: 'GET',
+            headers: {
+                'ACCEPT': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        })
+        .then((response) => response.text())
+        .then((responseText) => {
+            json = JSON.parse(responseText);
+            console.log(json['ITEMS']);
+
+            this.setState({
+                listData: json['ITEMS'],
+            })
+        })
+    }
+
+    async writeReview() 
+    {
+        let today = new Date();
+        let todayStr = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate() + ' ' + today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
+        let url = 'http://61.106.221.110:8180/Finedust/WriteReview.jsp?nickname=' + this.state.nickname + '&&password=' + this.state.password + '&&rating=' + this.state.rating + '&&date=' + todayStr + '&&content=' + this.state.review;
+        console.log(url);
+
+        await fetch(url, {
+            method: 'GET',
+            headers: {
+                'ACCEPT': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        })
+        .then((response) => response.text())
+        .then((responseText) => {
+            json = JSON.parse(responseText);
+
+            this.getReviews();
+        })
+    }
+
+    componentDidMount()
+    {
+        this.getReviews();
     }
 
     render() {
@@ -319,9 +368,9 @@ export default class Review extends Component<Props> {
                                 }}
                             >
                                 <TextInput
-                                    onPress={()=>{
+                                    onChangeText={(text)=>{
                                         this.setState({
-                                            review: '',
+                                            review: text,
                                         })
                                     }}
                                     style={{
@@ -359,6 +408,7 @@ export default class Review extends Component<Props> {
                                         this.setState({
                                             visibleWrite: false,
                                         })
+                                        this.writeReview();
                                     }}
                                 >
                                     <Text
@@ -571,7 +621,7 @@ export default class Review extends Component<Props> {
                                                 textAlignVertical: 'top',
                                                 color: 'black',
                                             }}
-                                        >{item.review}
+                                        >{item.content}
                                         </Text>
 
                                         <View
@@ -594,7 +644,7 @@ export default class Review extends Component<Props> {
                                                     // Do like.
                                                 }}
                                             >
-                                                <Image
+                                                {/* <Image
                                                     source={ICON_HEART}
                                                     style={{
                                                         width: WP('6%'),
@@ -602,7 +652,7 @@ export default class Review extends Component<Props> {
                                                         tintColor: colors.main
                                                     }}
                                                     resizeMode='stretch'
-                                                />
+                                                /> */}
                                             </TouchableOpacity>
 
                                             <Text

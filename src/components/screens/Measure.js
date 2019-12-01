@@ -145,6 +145,32 @@ class Measure extends Component<Props> {
         }
     }
 
+    makeDummyData = async() => {
+        let dummy = new Object();
+
+        for(let i = 1; i < 500; i++)
+        {
+            let today = new Date();
+            let todayTime = today.getTime() - (i * 24 * 60 * 60 * 1000);
+            today.setTime(todayTime);
+            todayStr = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
+            let obj = new Object();
+            obj.year = today.getFullYear();
+            obj.month = today.getMonth() + 1;
+            obj.day = today.getDate();
+            obj.hour = today.getHours();
+            obj.minute = today.getMinutes();
+            obj.second = today.getSeconds();
+            obj.finedust = (Math.floor(Math.random() * 400) + 85 / 10);
+            obj.co = (Math.floor(Math.random() * 10) + 1 / 10);
+            obj.h = (Math.floor(Math.random() * 10) + 1 / 10);
+            dummy[todayStr] = obj;
+        }
+
+        let dummyToString = JSON.stringify(dummy);
+        await AsyncStorage.setItem('datas', dummyToString);
+    }
+
     setData = async(obj) => {
         try {
             let datas = await AsyncStorage.getItem('datas');
@@ -170,13 +196,13 @@ class Measure extends Component<Props> {
                     datas[todayString] = obj;
                 }
                 let newDatasToString = JSON.stringify(datas);
-                console.log(newDatasToString);
+                // console.log(newDatasToString);
                 await AsyncStorage.setItem('datas', newDatasToString);
             } else {
                 let newDatas = new Object();
                 let keyData = obj.year + "/" + obj.month + "/" + obj.day;
                 newDatas[keyData] = obj;
-                console.log(newDatas);
+                // console.log(newDatas);
                 let neWDatasToString = JSON.stringify(newDatas);
                 await AsyncStorage.setItem('datas', neWDatasToString);
             }
@@ -188,6 +214,8 @@ class Measure extends Component<Props> {
     }
 
     componentDidMount() {
+        // this.makeDummyData();
+
         this.interval = setInterval(()=> {
             BluetoothSerial.readFromDevice()
             .then((data) => {
@@ -225,8 +253,8 @@ class Measure extends Component<Props> {
                 }
             })
             .catch((error) => {
-                console.log('read error!');
-                console.log(error);
+                // console.log('read error!');
+                // console.log(error);
             })
         }, 50);
     }
